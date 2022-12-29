@@ -3,12 +3,6 @@
 	"name": "Recipe Lang",
 	"patterns": [
 		{
-			"include": "#keywords"
-		},
-		{
-			"include": "#strings"
-		},
-		{
 			"include": "#comments"
 		},
 		{
@@ -16,26 +10,15 @@
 		},
 		{
 			"include": "#step"
+		},
+		{
+			"include": "#timer"
+		},
+		{
+			"include": "#ingredient"
 		}
 	],
 	"repository": {
-		"keywords": {
-			"patterns": [{
-				"name": "keyword.control.recipe-lang",
-				"match": "\\b(if|while|for|return)\\b"
-			}]
-		},
-		"strings": {
-			"name": "string.quoted.double.recipe-lang",
-			"begin": "\"",
-			"end": "\"",
-			"patterns": [
-				{
-					"name": "constant.character.escape.recipe-lang",
-					"match": "\\\\."
-				}
-			]
-		},
 		"comments": {
 			"name": "comment.recipe-lang",
 			"patterns": [
@@ -45,16 +28,379 @@
 				},
 				{
 					"name": "comment.block.recipe-lang",
-					"match": "\\s*\\[\\-.*?\\-\\]\\s*"
+					"begin": "(\\[-)(?:\\s*((@)internal)(?=\\s|(-])))?",
+					"beginCaptures": {
+						"1": {
+							"name": "punctuation.definition.comment.recipe-lang"
+						},
+						"2": {
+							"name": "storage.type.internaldeclaration.recipe-lang"
+						},
+						"3": {
+							"name": "punctuation.decorator.internaldeclaration.recipe-lang"
+						}
+					},
+					"end": "-]",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.definition.comment.recipe-lang"
+						}
+					}
 				}
 			]
 		},
 		"metadata": {
 			"patterns": [
 				{
-					"name": "keyword.",
-					"match": "\\\\."
+					"match": "(^>>)$",
+					"name": "keyword.recipe-lang.punctuation.section.mapping.begin.recipe-lang"
+				},
+				{
+					"match": "(^>>)([^:]+?)$",
+					"captures": {
+						"1": {
+							"name": "keyword.recipe-lang.punctuation.section.mapping.begin.recipe-lang"
+						},
+						"2": {
+							"name": "invalid.illegal.expected-mapping-key.recipe-lang"
+						}
+					}
+				},
+				{
+					"match": "(^>>)([^:]+?)(:\\s.*)",
+					"captures": {
+						"1": {
+							"name": "keyword.recipe-lang.punctuation.section.mapping.begin.recipe-lang"
+						},
+						"2": {
+							"name": "entity.name.tag.metadata.recipe-lang string.unquoted.plain.out.recipe-lang"
+						},
+						"3": {
+							"name": "invalid.illegal.expected-mapping-key.recipe-lang"
+						}
+					}
+				},
+				{
+					"match": "(^>>)([^:]+?)(:)(.*?)$",
+					"captures": {
+						"1": {
+							"name": "keyword.recipe-lang.punctuation.section.mapping.begin.recipe-lang"
+						},
+						"2": {
+							"name": "entity.name.tag.metadata.recipe-lang string.unquoted.plain.out.recipe-lang"
+						},
+						"3": {
+							"name": "keyword.recipe-lang.punctuation.seperator.mapping.key-value.recipe-lang"
+						},
+						"4": {
+							"name": "value.metadata.recipe-lang string.unquoted.plain.out.recipe-lang"
+						}
+					}
 				}
+			]
+		},
+		"ingredient": {
+			"patterns": [
+				{
+					"match": "(#)(\\()([^)]*?)(\\))",
+					"captures": {
+						"1": {
+							"name": "keyword.recipe-lang.punctuation.definition.ingredient.recipe-lang"
+						},
+						"2": {
+							"name": "keyword.recipe-lang.punctuation.definition.ingredient.modifier.begin.recipe-lang"
+						},
+						"3": {
+							"name": "variable.recipe-lang.constant.string.ingredient.modifier.recipe-lang"
+						},
+						"4": {
+							"name": "keyword.recipe-lang.punctuation.definition.ingredient.modifier.end.recipe-lang"
+						}
+					}
+				},
+				{
+					"match": "(#)(\\()(.*?)$",
+					"captures": {
+						"1": {
+							"name": "keyword.recipe-lang.punctuation.definition.ingredient.recipe-lang"
+						},
+						"2": {
+							"name": "invalid.illegal.expected-end-of-modifier.recipe-lang"
+						},
+						"3": {
+							"name": "invalid.illegal.expected-end-of-modifier.recipe-lang"
+						}
+					}
+				},
+				{
+					"match": "(#)(\\w*?|[^@#~]+?)({)([^}]*?)(})(\\()([^)]*?)(\\))",
+					"captures": {
+						"1": {
+							"name": "keyword.recipe-lang.punctuation.definition.ingredient.recipe-lang"
+						},
+						"2": {
+							"patterns": [
+								{
+									"include": "#ingredient_word"
+								}
+							]
+						},
+						"3": {
+							"name": "keyword.recipe-lang.punctuation.definition.ingredient.amount.begin.recipe-lang"
+						},
+						"4": {
+							"patterns": [
+								{
+									"include": "#ingredient_amount"
+								}
+							]
+						},
+						"5": {
+							"name": "keyword.recipe-lang.punctuation.definition.ingredient.amount.end.recipe-lang"
+						},
+						"6": {
+							"name": "keyword.recipe-lang.punctuation.definition.ingredient.modifier.begin.recipe-lang"
+						},
+						"7": {
+							"name": "variable.recipe-lang.constant.string.ingredient.modifier.recipe-lang"
+						},
+						"8": {
+							"name": "keyword.recipe-lang.punctuation.definition.ingredient.modifier.end.recipe-lang"
+						}
+					}
+				},
+				{
+					"match": "(#)(\\w*?|[^@#~]+?)({)([^}]*?)(})(\\()(.*?)$",
+					"captures": {
+						"1": {
+							"name": "keyword.recipe-lang.punctuation.definition.ingredient.recipe-lang"
+						},
+						"2": {
+							"patterns": [
+								{
+									"include": "#ingredient_word"
+								}
+							]
+						},
+						"3": {
+							"name": "keyword.recipe-lang.punctuation.definition.ingredient.amount.begin.recipe-lang"
+						},
+						"4": {
+							"patterns": [
+								{
+									"include": "#ingredient_amount"
+								}
+							]
+						},
+						"5": {
+							"name": "keyword.recipe-lang.punctuation.definition.ingredient.amount.end.recipe-lang"
+						},
+						"6": {
+							"name": "invalid.illegal.expected-end-of-modifier.recipe-lang"
+						},
+						"7": {
+							"name": "invalid.illegal.expected-end-of-modifier.recipe-lang"
+						}
+					}
+				},
+				{
+					"match": "(#)(\\w*?|[^@#~]+?)({)([^}]*?)(})",
+					"captures": {
+						"1": {
+							"name": "keyword.recipe-lang.punctuation.definition.ingredient.recipe-lang"
+						},
+						"2": {
+							"patterns": [
+								{
+									"include": "#ingredient_word"
+								}
+							]
+						},
+						"3": {
+							"name": "keyword.recipe-lang.punctuation.definition.ingredient.amount.begin.recipe-lang"
+						},
+						"4": {
+							"patterns": [
+								{
+									"include": "#ingredient_amount"
+								}
+							]
+						},
+						"5": {
+							"name": "keyword.recipe-lang.punctuation.definition.ingredient.amount.end.recipe-lang"
+						}
+					}
+				},
+				{
+					"match": "(#)(\\w*?|[^@#~]+?)({)([^}]*?)$",
+					"captures": {
+						"1": {
+							"name": "keyword.recipe-lang.punctuation.definition.ingredient.recipe-lang"
+						},
+						"2": {
+							"patterns": [
+								{
+									"include": "#ingredient_word"
+								}
+							]
+						},
+						"3": {
+							"name": "invalid.illegal.expected-end-of-amount.recipe-lang"
+						},
+						"4": {
+							"name": "invalid.illegal.expected-end-of-amount.recipe-lang"
+						}
+					}
+				},
+				{
+					"match": "(#)(.+?)\\b",
+					"captures": {
+						"1": {
+							"name": "keyword.recipe-lang.punctuation.definition.ingredient.recipe-lang"
+						},
+						"2": {
+							"name": "entity.name.tag.css.recipe-lang.entity.name.tag.ingredient.one-word.recipe-lang"
+						}
+					}
+				},
+				{
+					"match": "(#)",
+					"name": "keyword.recipe-lang.punctuation.definition.ingredient.recipe-lang"
+				}
+			]
+		},
+		"ingredient_word": {
+			"patterns": [
+				{
+					"match": "(\\w*?)$",
+					"name": "entity.name.tag.css.recipe-lang.entity.name.tag.ingredient.one-word.recipe-lang"
+				},
+				{
+					"match": "([^@#~]+?)$",
+					"name": "entity.name.tag.css.recipe-lang.entity.name.tag.ingredient.multi-word.recipe-lang"
+				}
+			]
+		},
+		"ingredient_amount": {
+			"patterns": [
+				{
+					"match": "([^}_]+?(?=}|_|$))",
+					"name": "variable.recipe-lang.constant.string.ingredient.amount.recipe-lang"
+				},
+				{
+					"match": "(_)",
+					"name": "keyword.recipe-lang.punctuation.definition.ingredient.amount.separator.recipe-lang"
+				}
+			]
+		},
+		"timer": {
+			"patterns": [
+				{
+					"match": "(@)$",
+					"name": "keyword.recipe-lang.punctuation.definition.timer.recipe-lang"
+				},
+				{
+					"match": "(@)(\\w*?|[^@#~]+?)({\\s*?})",
+					"captures": {
+						"1": {
+							"name": "keyword.recipe-lang.punctuation.definition.timer.recipe-lang"
+						},
+						"2": {
+							"patterns": [
+								{
+									"include": "#timer_word"
+								}
+							]
+						},
+						"3": {
+							"name": "invalid.illegal.expected-duration.recipe-lang"
+						}
+					}
+				},
+				{
+					"match": "(@)(\\w*?|[^@#~]+?)({)([^}]*?)(})",
+					"captures": {
+						"1": {
+							"name": "keyword.recipe-lang.punctuation.definition.timer.recipe-lang"
+						},
+						"2": {
+							"patterns": [
+								{
+									"include": "#timer_word"
+								}
+							]
+						},
+						"3": {
+							"name": "keyword.recipe-lang.punctuation.definition.timer.duration.begin.recipe-lang"
+						},
+						"4": {
+							"patterns": [
+								{
+									"include": "#timer_duration"
+								}
+							]
+						},
+						"5": {
+							"name": "keyword.recipe-lang.punctuation.definition.timer.duration.end.recipe-lang"
+						}
+					}
+				},
+				{
+					"match": "(@)(\\w*?|[^@#~]+?)({)(.*?)$",
+					"captures": {
+						"1": {
+							"name": "keyword.recipe-lang.punctuation.definition.timer.recipe-lang"
+						},
+				"2": {
+					"patterns": [
+						{
+						"include": "#timer_word"
+					}
+				]
+			},
+			"3": {
+				"name": "invalid.illegal.expected-end-of-duration.recipe-lang"
+			},
+			"4": {
+				"name": "invalid.illegal.expected-end-of-duration.recipe-lang"
+			}
+		}
+	},
+	{
+		"match": "(@)([^@#~]+?)$",
+		"captures": {
+			"1": {
+				"name": "keyword.recipe-lang.punctuation.definition.timer.recipe-lang"
+			},
+			"2": {
+				"name": "invalid.illegal.expected-begining-of-duration.recipe-lang"
+			}
+		}
+	}
+			]
+		},
+		"timer_word": {
+			"patterns": [
+			{
+				"match": "(\\w+?)$",
+				"name": "entity.name.tag.css.recipe-lang.entity.name.tag.timer.one-word.recipe-lang"
+			},
+			{
+				"match": "([^@#~]+?)$",
+				"name": "entity.name.tag.css.recipe-lang.entity.name.tag.timer.multi-word.recipe-lang"
+			}
+			]
+		},
+		"timer_duration": {
+			"patterns": [
+			{
+				"match": "([^}_]+?)",
+				"name": "variable.recipe-lang.constant.string.timer.duration.recipe-lang"
+			},
+			{
+				"match": "(_)",
+				"name": "keyword.recipe-lang.punctuation.definition.timer.duration.separator.recipe-lang"
+			}
 			]
 		}
 	},
