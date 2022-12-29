@@ -29,7 +29,7 @@
 					"name": "keyword.recipe-lang.punctuation.section.mapping.begin.recipe-lang."
 				},
 				{
-					"match": "(^#)(\\s*.+)$",
+					"match": "(^#)(\\s+.+)$",
 					"captures": {
 						"1": {
 							"name": "punctuation.definition.heading.recipe-lang heading.recipe-lang markup.heading.markdown"
