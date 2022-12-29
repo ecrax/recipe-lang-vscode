@@ -1,14 +1,16 @@
 {
   "name": "recipe-lang",
   "displayName": "recipe-lang",
-  "description": "",
+  "description": "recipe-lang syntax support",
   "version": "0.0.1",
+  "publisher": "ecrax",
   "engines": {
     "vscode": "^1.50.0"
   },
   "categories": [
     "Programming Languages"
   ],
+  "repository": "https://github.com/ecrax/recipe-lang",
   "contributes": {
     "languages": [{
       "id": "recipe-lang",
