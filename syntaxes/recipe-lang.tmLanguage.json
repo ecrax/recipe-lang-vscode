@@ -9,6 +9,9 @@
 			"include": "#metadata"
 		},
 		{
+			"include": "#title"
+		},
+		{
 			"include": "#step"
 		},
 		{
@@ -19,6 +22,25 @@
 		}
 	],
 	"repository": {
+		"title": {
+			"patterns": [
+				{
+					"match": "(^#)$",
+					"name": "keyword.recipe-lang.punctuation.section.mapping.begin.recipe-lang."
+				},
+				{
+					"match": "(^#)(\\s*.+)$",
+					"captures": {
+						"1": {
+							"name": "punctuation.definition.heading.recipe-lang heading.recipe-lang markup.heading.markdown"
+						},
+						"2": {
+							"name": "entity.name.section.markdown heading.recipe-lang markup.heading.markdown"
+						}
+					}
+				}
+			]
+		},
 		"comments": {
 			"name": "comment.recipe-lang",
 			"patterns": [
@@ -67,7 +89,7 @@
 					}
 				},
 				{
-					"match": "(^>>)([^:]+?)(:\\s.*)",
+					"match": "(^>>)([^:]+?)(:\\s.*)$",
 					"captures": {
 						"1": {
 							"name": "keyword.recipe-lang.punctuation.section.mapping.begin.recipe-lang"
