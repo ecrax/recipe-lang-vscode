@@ -1,0 +1,62 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Recipe Lang",
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"include": "#comments"
+		},
+		{
+			"include": "#metadata"
+		},
+		{
+			"include": "#step"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [{
+				"name": "keyword.control.recipe-lang",
+				"match": "\\b(if|while|for|return)\\b"
+			}]
+		},
+		"strings": {
+			"name": "string.quoted.double.recipe-lang",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.recipe-lang",
+					"match": "\\\\."
+				}
+			]
+		},
+		"comments": {
+			"name": "comment.recipe-lang",
+			"patterns": [
+				{
+					"name": "comment.line.recipe-lang",
+					"match": "--.*"
+				},
+				{
+					"name": "comment.block.recipe-lang",
+					"match": "\\s*\\[\\-.*?\\-\\]\\s*"
+				}
+			]
+		},
+		"metadata": {
+			"patterns": [
+				{
+					"name": "keyword.",
+					"match": "\\\\."
+				}
+			]
+		}
+	},
+	"scopeName": "source.recipe"
+}

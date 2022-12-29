@@ -1,0 +1,25 @@
+{
+  "name": "recipe-lang",
+  "displayName": "recipe-lang",
+  "description": "",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "recipe-lang",
+      "aliases": ["Recipe Lang", "recipe-lang"],
+      "extensions": [".recipe"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "recipe-lang",
+      "scopeName": "source.recipe",
+      "path": "./syntaxes/recipe-lang.tmLanguage.json"
+    }]
+  }
+}
