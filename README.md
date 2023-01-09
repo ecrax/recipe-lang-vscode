@@ -6,7 +6,7 @@ This project is heavily inspired by [CookLang](https://github.com/cooklang) and 
 
 ## Installation
 
-Run `vsce package`
+Run `vsce package` and install the generated `.vsix` file
 
 **or**
 
