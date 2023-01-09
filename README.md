@@ -6,6 +6,10 @@ This project is strongly inspired by [CookLang](https://github.com/cooklang) and
 
 ## Installation
 
+Run `vsce package`
+
+**or**
+
 Install the `.vsix` file from the releases tab
 
 ## TODO
